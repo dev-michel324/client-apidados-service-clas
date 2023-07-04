@@ -93,19 +93,13 @@ function menu_criar(): void
     $pessoa->doente = ($doente == 'S') ? true : false;
     $empregado = readline("É empregado? S. sim ou N. não: ");
     $pessoa->empregado = ($empregado == 'S') ? true : false;
-    # create a guzzle post request
-    var_dump(json_encode([
-        'usuario' => 'pessoas',
-        'valor' => $pessoa
-    ]));
-    die();
     $response = $client->getClient()->post(
         "api" . _path('balde', [["{balde}", "pessoas"]]),
         [
-            'json' => json_encode([
+            'json' => [
                 'usuario' => 'pessoas',
-                'valor' => $pessoa
-            ])
+                'valor' => json_encode($pessoa)
+            ]
         ]
     );
     if ($response->getStatusCode() == 201) {
